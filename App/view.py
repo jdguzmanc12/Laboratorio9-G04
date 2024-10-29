@@ -47,7 +47,7 @@ def new_logic():
 #  -------------------------------------------------------------
 # Funciones para la correcta impresión de los datos
 #  -------------------------------------------------------------
-
+ 
 def print_menu():
     """
     Menu de usuario
@@ -60,6 +60,7 @@ def print_menu():
     print("3- Consultar crimenes en un rango de fechas")
     print("4- Consultar crimenes por codigo y fecha")
     #TODO Agregar opción 5 en el menú, consultar por REPORTING_AREA
+    print("5- Consultar crimenes por un rango de areas")
     print("0- Salir")
     print("*******************************************")
 
@@ -110,6 +111,10 @@ def main():
             print("\nBuscando crimenes en un rango de areas: ")
             print("Las areas estan numeradas con enteros (1 - 962)")
             print("Un area desconocida tiene el el numero 9999")
+            initialArea = int(input("Area Inicial: "))
+            finalArea = int(input("Area Final: "))
+            totalCrimes = logic.get_crimes_by_area_range(control, initialArea, finalArea)
+            print("\nTotal de crimenes en el rango de areas: " + str(totalCrimes))
         else:
             sys.exit(0)
     sys.exit(0)
