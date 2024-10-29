@@ -113,3 +113,92 @@ def get_node(node, key):
         else:
             return node["value"]
     return None
+
+
+def floor(node, key):
+    if node is None:
+        return None
+    if key == node["key"]:
+        return node["key"]
+    if key < node["key"]:
+        return floor(node["left"], key)
+    t = floor(node["right"], key)
+    return t if t is not None else node["key"]
+
+def ceiling(node, key):
+    if node is None:
+        return None
+    if key == node["key"]:
+        return node["key"]
+    if key > node["key"]:
+        return ceiling(node["right"], key)
+    t = ceiling(node["left"], key)
+    return t if t is not None else node["key"]
+
+def select(node, k):
+    if node is None:
+        return None
+    t = size_node(node["left"])
+    if t > k:
+        return select(node["left"], k)
+    elif t < k:
+        return select(node["right"], k - t - 1)
+    else:
+        return node["key"]
+
+def rank(node, key):
+    if node is None:
+        return 0
+    if key < node["key"]:
+        return rank(node["left"], key)
+    elif key > node["key"]:
+        return 1 + size_node(node["left"]) + rank(node["right"], key)
+    else:
+        return size_node(node["left"])
+
+def keys(my_rbt, low, high):
+    result = []
+    collect_keys(my_rbt["root"], result, low, high)
+    return {"size": len(result), "elements": result}
+
+def collect_keys(node, result, low, high):
+    if node is None:
+        return
+    if low < node["key"]:
+        collect_keys(node["left"], result, low, high)
+    if low <= node["key"] <= high:
+        result.append(node["key"])
+    if high > node["key"]:
+        collect_keys(node["right"], result, low, high)
+
+def min_key(my_rbt):
+    return min_key_node(my_rbt["root"])
+
+def min_key_node(node):
+    if node is None or node["left"] is None:
+        return node["key"] if node else None
+    return min_key_node(node["left"])
+
+def max_key(my_rbt):
+    return max_key_node(my_rbt["root"])
+
+def max_key_node(node):
+    if node is None or node["right"] is None:
+        return node["key"] if node else None
+    return max_key_node(node["right"])
+
+def values(my_rbt, low, high):
+    result = []
+    collect_values(my_rbt["root"], result, low, high)
+    return {"size": len(result), "elements": result}
+
+def collect_values(node, result, low, high):
+    if node is None:
+        return
+    if low < node["key"]:
+        collect_values(node["left"], result, low, high)
+    if low <= node["key"] <= high:
+        result.append(node["value"])
+    if high > node["key"]:
+        collect_values(node["right"], result, low, high)
+
