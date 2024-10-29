@@ -6,7 +6,7 @@ def new_map():
 def is_empty(my_rbt):
     return my_rbt["root"] is None
 
-def size(my_rbt):
+def size(my_rbt, size_tree):
     return size_tree(my_rbt["root"])
 
 def put(my_rbt, key, value):
@@ -19,7 +19,7 @@ def get(my_rbt, key):
 def contains(my_rbt, key):
     return get(my_rbt, key) is not None
 
-def remove(my_rbt, key):
+def remove(my_rbt, key, remove_key):
     if contains(my_rbt, key):
         if not rbt_node.is_red(my_rbt["root"]["left"]) and not rbt_node.is_red(my_rbt["root"]["right"]):
             rbt_node.change_color(my_rbt["root"], rbt_node.RED)
@@ -27,17 +27,17 @@ def remove(my_rbt, key):
         if my_rbt["root"] is not None:
             my_rbt["root"]["color"] = rbt_node.BLACK
 
-def key_set(my_rbt):
+def key_set(my_rbt, key_set_tree):
     keys = []
     key_set_tree(my_rbt["root"], keys)
     return keys
 
-def value_set(my_rbt):
+def value_set(my_rbt, value_set_tree):
     values = []
     value_set_tree(my_rbt["root"], values)
     return values
 
-def height(my_rbt):
+def height(my_rbt, height_tree):
     return height_tree(my_rbt["root"])
 
 def rotate_left(node):
