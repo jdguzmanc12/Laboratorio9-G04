@@ -206,17 +206,13 @@ def index_size(analyzer):
 
 
 def min_key(analyzer):
-    """
-    Llave mas pequena
-    """
-    return rbt.left_key(analyzer["dateIndex"])
+    """Retorna la llave mínima en el índice de fechas."""
+    return rbt.min_key(analyzer["dateIndex"])
 
 
 def max_key(analyzer):
-    """
-    Llave mas grande
-    """
-    return rbt.right_key(analyzer["dateIndex"])
+    """Retorna la llave máxima en el índice de fechas."""
+    return rbt.max_key(analyzer["dateIndex"])
 
 
 def index_height_areas(analyzer):
@@ -251,14 +247,9 @@ def max_key_areas(analyzer):
     return rbt.right_key(analyzer["areaIndex"])
 
 def get_crimes_by_range_area(analyzer, initialArea, finalArea):
-    """
-    Retorna el numero de crimenes en un rango de areas
-    """
-    # TODO Completar la consulta de crimenes por rango de areas
+    """Retorna el número de crímenes en un rango de áreas."""
     lst = rbt.values(analyzer["areaIndex"], initialArea, finalArea)
-    totalcrimes = 0
-    for area in lst["elements"]:
-        totalcrimes += al.size(area)
+    totalcrimes = sum(al.size(area) for area in lst["elements"])
     return totalcrimes
 
 def get_crimes_by_range(analyzer, initialDate, finalDate):
@@ -268,9 +259,7 @@ def get_crimes_by_range(analyzer, initialDate, finalDate):
     initialDate = datetime.datetime.strptime(initialDate, '%Y-%m-%d')
     finalDate = datetime.datetime.strptime(finalDate, '%Y-%m-%d')
     lst = rbt.values(analyzer["dateIndex"], initialDate.date(), finalDate.date())
-    totalcrimes = 0
-    for lstdate in lst["elements"]:
-        totalcrimes += al.size(lstdate["lstcrimes"])
+    totalcrimes = sum(al.size(lstdate["lstcrimes"]) for lstdate in lst["elements"])
     return totalcrimes
 
 
